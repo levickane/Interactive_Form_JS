@@ -1,6 +1,6 @@
 document.getElementById("name").focus()
 /* ******************************************
-Showing and hiding the Other job title field
+Showing and hiding the "Other" job title field
 ******************************************** */
 const otherInput = document.getElementById("other-title")
 const jobSelect = document.getElementById("title")
@@ -17,9 +17,10 @@ function jobOther(){
 }
 
 
-/* ******************************
-Color and Design Selection Stuff
-******************************* */
+/* **********************************************
+Color and Design Selection will show the "Color"
+that corresponds with the "Design"
+************************************************ */
 const colorSelect = document.getElementById("color")
 const jsPuns = [
     colorSelect.options[0],
@@ -54,7 +55,8 @@ function designChange(){
         }
     }
 }
-
+//The code below hides and shows the color field depending on whether or 
+//not the design has been selected
 const colorField = document.getElementById("shirt-colors")
 colorField.style.display = "none"
 function showColor(){
@@ -62,9 +64,10 @@ function showColor(){
 }
 
 
-/* ***********************
-Activity Selection Stuff
-************************ */
+/* ************************************************************************
+Activity Selection disables options/events that would run simultaneously
+It also adds a total value at the bottom for the price of the options
+************************************************************************** */
 const activitiesFieldSet = document.querySelector(".activities")
 const activityLabels = document.querySelectorAll(".activities label")
 activityLabels.forEach((label) => {
@@ -92,9 +95,6 @@ function selectActivity(){
         activitiesFieldSet.appendChild(tpElement)
     }
     tpElement.className = "activities"
-    if(price === 0){
-        activitiesFieldSet.removeChild(tpElement)
-    }
     tpElement.innerHTML = `Total: $${price}`
     
     const allInput = document.querySelectorAll(".activities label input:not(:checked)")
@@ -109,25 +109,27 @@ function selectActivity(){
     }
     activitiesValidator(price)
 }
+//this is the validator for the activities field to ensure 
+//at least 1 option is selected
 function activitiesValidator(price){
-    //The code below will show if you've not checked off a box
-    const activityNotice = document.createElement("p")
-    activityNotice.className = "validator"
-    if(price === 0){
-        activityNotice.innerHTML = "You must select at least 1 option"
-        activitiesFieldSet.appendChild(activityNotice)
+    let tpElement = document.querySelector(".activities p")
+    if(!tpElement){
+        tpElement = document.createElement("p")
+        activitiesFieldSet.appendChild(tpElement)
     }
-    if (price > 0 && activityNotice === true){
-        activitiesFieldSet.removeChild(activityNotice)
+    if(price === 0){
+        tpElement.innerHTML = "You must select at least 1 option"
+        tpElement.className = 'validator'
     }
 }
 
 
 
 
-/* ************
-Payment Stuff
-************** */
+/* **********************************************************
+Reveals current payment selection while hiding
+the which ever payment is not selected
+************************************************************ */
 const cc = document.getElementById("credit-card")
 const pp = document.getElementById("paypal")
 const bc = document.getElementById("bitcoin")
@@ -157,9 +159,9 @@ function paymentType(){
 
 
 
-/* ************
+/* ***********************
 Form VALIDATION
-************** */
+************************ */
 const nameInput = document.getElementById("name")
 const notValidName = document.createElement("p")
 notValidName.className = "validator"
@@ -237,7 +239,9 @@ zipInput.addEventListener("input", createListener(isValidZipCode));
 cvvInput.addEventListener("input", createListener(isValidCvv));
 
 /*********************
-Form submission Error
+Form submission Error: If areas of the form are not filled in, that
+need to be filled in, the form will not submit and the areas will
+be highlighted with their Form Validation highlighters
 *********************/
 
 const form = document.querySelector("form")
