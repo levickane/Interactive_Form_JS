@@ -135,7 +135,7 @@ const pp = document.getElementById("paypal")
 const bc = document.getElementById("bitcoin")
 const paymentFieldSet = cc.parentNode
 const paymentSelect = document.getElementById("payment")
-
+paymentSelect.selectedIndex = 1
 paymentSelect.addEventListener('change', (e)=>{
     paymentType()
 })
@@ -199,10 +199,10 @@ cvvInput.insertAdjacentElement("afterend", notValidCvv)
 
 
 function isValidName(name){
-    return /^[a-z]+$/.test(name)
+    return /^[a-z]+$/i.test(name)
 }
 function isValidEmail(email){
-    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email)
+    return /^[^@]+@[^@.]+\.[a-z]{2,}$/i.test(email)
 }
 function isValidCard(card){
     return /^\d{13,16}$/.test(card)
