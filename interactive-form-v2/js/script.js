@@ -199,7 +199,7 @@ cvvInput.insertAdjacentElement("afterend", notValidCvv)
 
 
 function isValidName(name){
-    return /^[a-z]+$/i.test(name)
+    return /^[a-z]{2,}\s[a-z]{2,}$/i.test(name)
 }
 function isValidEmail(email){
     return /^[^@]+@[^@.]+\.[a-z]{2,}$/i.test(email)
