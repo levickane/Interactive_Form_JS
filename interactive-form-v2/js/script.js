@@ -286,3 +286,4 @@ form.addEventListener('submit', (e)=>{
 jobOther()
 paymentType()
 designChange()
+
