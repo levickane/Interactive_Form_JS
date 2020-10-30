@@ -176,12 +176,25 @@ notValidEmail.style.display = "none"
 notValidEmail.innerHTML = "Must be in email format (example@mail.com)"
 emailInput.insertAdjacentElement("afterend", notValidEmail)
 
+
+//fuckin around with this whole thing.
 const cardInput = document.getElementById("cc-num")
 const notValidCard = document.createElement("p")
 notValidCard.className = "validator"
-notValidCard.style.display = "none"
-notValidCard.innerHTML = "Must be 13-16 numbers only"
+notValidCard.display = "none"
 cardInput.insertAdjacentElement("afterend", notValidCard)
+
+function isCardValid(){
+    if (/\D+/.test(cardInput.value)){
+        notValidCard.innerHTML = "Must be numbers ONLY"
+    }else{
+        notValidCard.innerHTML = "Must be 13-16 numbers only"
+    }
+}
+
+
+
+
 
 const zipInput = document.getElementById("zip")
 const notValidZip = document.createElement("p")
@@ -190,6 +203,15 @@ notValidZip.style.display = "none"
 notValidZip.innerHTML = "Must be 5 numbers only"
 zipInput.insertAdjacentElement("afterend", notValidZip)
 
+function isZipValid(){
+    if (/\D+/.test(zipInput.value)){
+        notValidZip.innerHTML = "Must be NUMBERS only"
+    }else{
+        notValidZip.innerHTML = "Must be 5 numbers only"
+    }
+}
+
+
 const cvvInput = document.getElementById("cvv")
 const notValidCvv = document.createElement("p")
 notValidCvv.className = "validator"
@@ -197,6 +219,14 @@ notValidCvv.style.display = "none"
 notValidCvv.innerHTML = "Must be 3 numbers only"
 cvvInput.insertAdjacentElement("afterend", notValidCvv)
 
+function isCvvValid(){
+    if (/\D+/.test(cvvInput.value)){
+        notValidCvv.innerHTML = "Must be NUMBERS only"
+    }else{
+        notValidCvv.innerHTML = "Must be 3 numbers only"
+    }
+
+}
 
 function isValidName(name){
     return /^[a-z]{2,}\s[a-z]{2,}$/i.test(name)
@@ -222,27 +252,33 @@ function showOrHideTip(show, element) {
       element.style.display = "none";
     }
   }
-function createListener(validator) {
+function createListener(validator, x) {
     return e => {
       const text = e.target.value;
       const valid = validator(text);
       const showTip = text!== "" && !valid; //putting in the text!=="" removes the alert when you delete everything from the field.
       const tooltip = e.target.nextElementSibling;
       showOrHideTip(showTip, tooltip);
+      if (x){
+          x()
+      }
     };
   }
 
 nameInput.addEventListener("input", createListener(isValidName));
 emailInput.addEventListener("input", createListener(isValidEmail));
-cardInput.addEventListener("input", createListener(isValidCard));
-zipInput.addEventListener("input", createListener(isValidZipCode));
-cvvInput.addEventListener("input", createListener(isValidCvv));
+cardInput.addEventListener("input", createListener(isValidCard, isCardValid));
+zipInput.addEventListener("input", createListener(isValidZipCode, isZipValid));
+cvvInput.addEventListener("input", createListener(isValidCvv, isCvvValid));
 
 /*********************
 Form submission Error: If areas of the form are not filled in, that
 need to be filled in, the form will not submit and the areas will
 be highlighted with their Form Validation highlighters
 *********************/
+
+
+//added this guy
 
 const form = document.querySelector("form")
 form.addEventListener('submit', (e)=>{
@@ -258,6 +294,12 @@ form.addEventListener('submit', (e)=>{
         isValid = false
     }
     if (!isValidCard(cardInput.value)){
+        const tooltip = cardInput.nextElementSibling;
+        showOrHideTip(true, tooltip);
+        isValid = false
+    }
+    //added this guy
+    if (!invalidEntry(cardInput.value)){
         const tooltip = cardInput.nextElementSibling;
         showOrHideTip(true, tooltip);
         isValid = false
@@ -282,8 +324,6 @@ form.addEventListener('submit', (e)=>{
     }
 })
 
-
 jobOther()
 paymentType()
 designChange()
-
