@@ -166,7 +166,7 @@ const nameInput = document.getElementById("name")
 const notValidName = document.createElement("p")
 notValidName.className = "validator"
 notValidName.style.display ="none"
-notValidName.innerHTML = "Not a Valid Entry. Try Again"
+notValidName.innerHTML = "Must enter first AND last name"
 nameInput.insertAdjacentElement("afterend", notValidName)
 
 const emailInput = document.getElementById("mail")
@@ -179,7 +179,8 @@ emailInput.insertAdjacentElement("afterend", notValidEmail)
 const cardInput = document.getElementById("cc-num")
 const notValidCard = document.createElement("p")
 notValidCard.className = "validator"
-notValidCard.display = "none"
+notValidCard.style.display = "none"
+notValidCard.innerHTML = "Must be 13-16 numbers only"
 cardInput.insertAdjacentElement("afterend", notValidCard)
 
 const zipInput = document.getElementById("zip")
@@ -270,8 +271,6 @@ be highlighted with their Form Validation highlighters
 *********************/
 
 
-//added this guy
-
 const form = document.querySelector("form")
 form.addEventListener('submit', (e)=>{
     let isValid = true
@@ -290,6 +289,11 @@ form.addEventListener('submit', (e)=>{
         showOrHideTip(true, tooltip);
         isValid = false
     }
+    // if (!isCardValid(cardInput.value)){
+    //     const tooltip = cardInput.nextElementSibling;
+    //     showOrHideTip(true, tooltip);
+    //     isValid = false
+    // }
     if (!isValidZipCode(zipInput.value)){
         const tooltip = zipInput.nextElementSibling;
         showOrHideTip(true, tooltip);
