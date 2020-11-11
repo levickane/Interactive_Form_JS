@@ -284,24 +284,24 @@ form.addEventListener('submit', (e)=>{
         showOrHideTip(true, tooltip);
         isValid = false
     }
-    if (!isValidCard(cardInput.value)){
-        const tooltip = cardInput.nextElementSibling;
-        showOrHideTip(true, tooltip);
-        isValid = false
+    if(paymentSelect.selectedIndex === 1){
+        if (!isValidCard(cardInput.value)){
+            const tooltip = cardInput.nextElementSibling;
+            showOrHideTip(true, tooltip);
+            isValid = false
+        }
+        if (!isValidZipCode(zipInput.value)){
+            const tooltip = zipInput.nextElementSibling;
+            showOrHideTip(true, tooltip);
+            isValid = false
+        }
+        if (!isValidCvv(cvvInput.value)){
+            const tooltip = cvvInput.nextElementSibling;
+            showOrHideTip(true, tooltip);
+            isValid = false
+        }
     }
-    // if (!isCardValid(cardInput.value)){
-    //     const tooltip = cardInput.nextElementSibling;
-    //     showOrHideTip(true, tooltip);
-    //     isValid = false
-    // }
-    if (!isValidZipCode(zipInput.value)){
-        const tooltip = zipInput.nextElementSibling;
-        showOrHideTip(true, tooltip);
-        isValid = false
-    }
-    if (!isValidCvv(cvvInput.value)){
-        const tooltip = cvvInput.nextElementSibling;
-        showOrHideTip(true, tooltip);
+    if(paymentSelect.selectedIndex === 0){
         isValid = false
     }
     const price = getTotalPrice()
